@@ -3,6 +3,7 @@ package com.khavspring.books_store.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,14 +17,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
 
-        UserDetails userDetailsOne = User.withUsername("User1").password(passwordEncoder().encode("PasswordOne")).build();
-        UserDetails userDetailsTwo = User.withUsername("User2").password(passwordEncoder().encode("PasswordTwo")).build();
-        UserDetails admin = User.withUsername("Admin").password(passwordEncoder().encode("Admin1")).build();
+        UserDetails userDetailsOne = User.withUsername("User1").password(passwordEncoder().encode("PasswordOne")).roles("USER").build();
+        UserDetails userDetailsTwo = User.withUsername("User2").password(passwordEncoder().encode("PasswordTwo")).roles("USER").build();
+        UserDetails admin = User.withUsername("Admin").password(passwordEncoder().encode("Admin1")).roles("ADMIN").build();
 
         return new InMemoryUserDetailsManager(userDetailsOne, userDetailsTwo, admin);
     }
