@@ -19,6 +19,12 @@ public class BookController {
         this.bookService = bookService;
     }
 
+
+    @GetMapping("/welcome")
+    public ResponseEntity<String> welcomeMessage() {
+        return new ResponseEntity<>("Welcome to Book Store", HttpStatus.OK);
+    }
+
     @GetMapping("/{bookId}")
     public ResponseEntity<BookDto> getBook(@PathVariable String bookId){
         BookDto bookDto = bookService.getBook(bookId);
